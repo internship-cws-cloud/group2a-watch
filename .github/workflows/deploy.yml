@@ -36,7 +36,7 @@ jobs:
           REPO: ${{ vars.ECR_REPO }}
           TAG: ${{ github.sha }}
         run: |
-          docker build --platform linux/amd64 \
+          docker build --platform linux/arm64 \
             -t $REGISTRY/$REPO:$TAG app
           docker push $REGISTRY/$REPO:$TAG
  
