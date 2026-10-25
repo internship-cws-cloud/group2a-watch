@@ -1,6 +1,13 @@
 terraform {
   required_version = "~> 1.9"
 
+  backend "s3" {
+    bucket         = "group2a-tfstate-210842714008" # YOUR bucket
+    key            = "infra/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "group2a-tflock" # YOUR table
+    encrypt        = true
+  }
 
   required_providers {
     aws = {

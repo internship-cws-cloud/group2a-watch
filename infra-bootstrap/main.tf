@@ -62,3 +62,86 @@ resource "aws_dynamodb_table" "lock" {
   }
 }
 
+resource "aws_iam_openid_connect_provider" "github" {
+  url             = "https://token.actions.githubusercontent.com"
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = ["6938fd4d98bab03faadb97b34396831e3780aea1"]
+}
+
+locals {
+  repo = "${var.github_org}/${var.github_repo}"
+}
+
+data "aws_iam_policy_document" "plan_trust" {
+  statement {
+    effect  = "Allow"
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+
+    principals {
+      type        = "Federated"
+      identifiers = [aws_iam_openid_connect_provider.github.arn]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "token.actions.githubusercontent.com:aud"
+      values   = ["sts.amazonaws.com"]
+    }
+
+    # pull_request events only. Not main, not any branch.
+    condition {
+      test     = "StringEquals"
+      variable = "token.actions.githubusercontent.com:sub"
+      values   = ["repo:${local.repo}:push"] #switched to push for aspokes branch
+    }
+  }
+}
+
+resource "aws_iam_role" "plan" {
+  name               = "${var.group_name}-gha-plan"
+  assume_role_policy = data.aws_iam_policy_document.plan_trust.json
+}
+
+resource "aws_iam_role_policy_attachment" "plan_readonly" {
+  role       = aws_iam_role.plan.name
+  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
+}
+
+data "aws_iam_policy_document" "deploy_trust" {
+  statement {
+    effect  = "Allow"
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+
+    principals {
+      type        = "Federated"
+      identifiers = [aws_iam_openid_connect_provider.github.arn]
+    }
+
+    condition {
+      test     = "StringEquals"
+      variable = "token.actions.githubusercontent.com:aud"
+      values   = ["sts.amazonaws.com"]
+    }
+
+    # ONE repository. ONE branch. Read this line twice.
+    condition {
+      test     = "StringEquals"
+      variable = "token.actions.githubusercontent.com:sub"
+      values   = ["repo:${local.repo}:ref:refs/heads/aspokes"] #switched to aspokes branch due to no main branch access
+    }
+  }
+}
+
+resource "aws_iam_role" "deploy" {
+  name               = "${var.group_name}-gha-deploy"
+  assume_role_policy = data.aws_iam_policy_document.deploy_trust.json
+}
+
+# Too broad, deliberately. See the note below.
+resource "aws_iam_role_policy_attachment" "deploy_admin" {
+  role       = aws_iam_role.deploy.name
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+}
+
+output "plan_role_arn" { value = aws_iam_role.plan.arn }
+output "deploy_role_arn" { value = aws_iam_role.deploy.arn }
