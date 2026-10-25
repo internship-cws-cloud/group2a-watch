@@ -16,8 +16,10 @@ provider "aws" {
 
 variable "region" { type = string }
 variable "group_name" { type = string }
-variable "github_org" { type = string }  # internship-cws-cloud
-variable "github_repo" { type = string } # group2a-watch
+variable "github_org" { type = string }     # internship-cws-cloud
+variable "github_repo" { type = string }    # group2a-watch
+variable "github_org_id" { type = string }  # numeric, from the OIDC token's sub
+variable "github_repo_id" { type = string } # numeric, from the OIDC token's sub
 
 # your own account number, looked up rather than typed
 data "aws_caller_identity" "me" {}
@@ -69,7 +71,8 @@ resource "aws_iam_openid_connect_provider" "github" {
 }
 
 locals {
-  repo = "${var.github_org}/${var.github_repo}"
+  # The org uses GitHub's ID-based OIDC subject: "owner@id/repo@id".
+  repo = "${var.github_org}@${var.github_org_id}/${var.github_repo}@${var.github_repo_id}"
 }
 
 data "aws_iam_policy_document" "plan_trust" {

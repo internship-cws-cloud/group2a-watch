@@ -1,16 +1,10 @@
 name: plan
  
 # aspokes is our main branch (no merge rights on main).
-# Plan on PRs into aspokes and on direct pushes to it; these are the only
-# two token subjects the plan role's trust policy accepts.
+# Plan on PRs into aspokes so that the plan role can assume the plan role's trust policy.
+# this is the only subject the plan role's trust policy accepts.
 on:
   pull_request:
-    branches: [aspokes]
-    paths:
-      - "infra/**"
-      - ".github/workflows/**"
-  push:
-    branches: [aspokes]
     paths:
       - "infra/**"
       - ".github/workflows/**"
@@ -31,7 +25,7 @@ jobs:
  
     steps:
       - uses: actions/checkout@v4
- 
+
       - uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ vars.AWS_PLAN_ROLE_ARN }}
