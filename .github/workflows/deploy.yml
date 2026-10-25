@@ -29,6 +29,11 @@ jobs:
  
       - uses: aws-actions/amazon-ecr-login@v2
         id: ecr
+
+      # the runner is x86 and Fargate runs ARM64, so emulate arm64 for the build
+      - uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
  
       - name: Build and push the image
         env:
