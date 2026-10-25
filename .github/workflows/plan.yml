@@ -1,8 +1,8 @@
 name: plan
  
 # aspokes is our main branch (no merge rights on main).
-# Plan on PRs into aspokes and on direct pushes to it; these are the only
-# two token subjects the plan role's trust policy accepts.
+# Plan on PRs into aspokes so that the plan role can assume the plan role's trust policy.
+# this is the only subject the plan role's trust policy accepts.
 on:
   pull_request:
     paths:
