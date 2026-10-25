@@ -17,7 +17,7 @@ provider "aws" {
 variable "region" { type = string }
 variable "group_name" { type = string }
 variable "github_org" { type = string }  # internship-cws-cloud
-variable "github_repo" { type = string } # group1a-scale
+variable "github_repo" { type = string } # group2a-watch
 
 # your own account number, looked up rather than typed
 data "aws_caller_identity" "me" {}
@@ -88,11 +88,16 @@ data "aws_iam_policy_document" "plan_trust" {
       values   = ["sts.amazonaws.com"]
     }
 
-    # pull_request events only. Not main, not any branch.
+    # pull_request events, plus pushes to aspokes (no main branch access).
+    # A push token's sub is "repo:<org>/<repo>:ref:refs/heads/<branch>";
+    # there is no ":push" form.
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${local.repo}:push"] #switched to push for aspokes branch
+      values = [
+        "repo:${local.repo}:pull_request",
+        "repo:${local.repo}:ref:refs/heads/aspokes",
+      ]
     }
   }
 }
