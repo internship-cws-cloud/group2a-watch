@@ -5,12 +5,6 @@ name: plan
 # two token subjects the plan role's trust policy accepts.
 on:
   pull_request:
-    branches: [aspokes]
-    paths:
-      - "infra/**"
-      - ".github/workflows/**"
-  push:
-    branches: [aspokes]
     paths:
       - "infra/**"
       - ".github/workflows/**"
