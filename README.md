@@ -12,7 +12,7 @@ Cloud Engineering Internship, Cohort 3.
 
 | Name | GitHub | Owns |
 |---|---|---|
-| | | |
+| Albert| aspokes| Infra|
 
 Fill this in during week 1. Every person should have a row, and by week 5
 every row should name something that person owns.
