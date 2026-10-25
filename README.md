@@ -25,7 +25,7 @@ should be able to follow this section and get the app running._
 ```
 # week 2: deployed by hand in the console - write down the steps here
 # week 3: make up
-# week 4: push to main
+# week 4: push to aspokes (our main branch - no merge rights on main)
 ```
 
 ## Decisions

@@ -1,7 +1,16 @@
 name: plan
  
+# aspokes is our main branch (no merge rights on main).
+# Plan on PRs into aspokes and on direct pushes to it; these are the only
+# two token subjects the plan role's trust policy accepts.
 on:
-  push: #changed from pull_request to push to allow for plan to run on aspokes branch
+  pull_request:
+    branches: [aspokes]
+    paths:
+      - "infra/**"
+      - ".github/workflows/**"
+  push:
+    branches: [aspokes]
     paths:
       - "infra/**"
       - ".github/workflows/**"
