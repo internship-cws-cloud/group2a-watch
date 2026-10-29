@@ -34,10 +34,10 @@ resource "aws_ecs_task_definition" "web" {
   network_mode             = "awsvpc"
   cpu                      = 256 # 0.25 vCPU
   memory                   = 512 # 0.5 GB
-  runtime_platform {
-    operating_system_family = "LINUX"
-    cpu_architecture        = "ARM64"
-  }
+  # runtime_platform {
+  #   operating_system_family = "LINUX"
+  #   cpu_architecture        = "ARM64"
+  # }
   execution_role_arn = aws_iam_role.exec.arn
 
   container_definitions = jsonencode([{
