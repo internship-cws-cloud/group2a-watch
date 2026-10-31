@@ -1,3 +1,5 @@
+[![plan](https://github.com/internship-cws-cloud/group2a-watch/actions/workflows/plan.yml/badge.svg?branch=aspokes)](https://github.com/internship-cws-cloud/group2a-watch/actions/workflows/plan.yml) [![deploy](https://github.com/internship-cws-cloud/group2a-watch/actions/workflows/deploy.yml/badge.svg?branch=aspokes)](https://github.com/internship-cws-cloud/group2a-watch/actions/workflows/deploy.yml)
+
 # group2a - Watch it
 
 Cloud Engineering Internship, Cohort 3.
@@ -12,7 +14,7 @@ Cloud Engineering Internship, Cohort 3.
 
 | Name | GitHub | Owns |
 |---|---|---|
-| | | |
+| Albert| aspokes| Infra|
 
 Fill this in during week 1. Every person should have a row, and by week 5
 every row should name something that person owns.
@@ -25,10 +27,13 @@ should be able to follow this section and get the app running._
 ```
 # week 2: deployed by hand in the console - write down the steps here
 # week 3: make up
-# week 4: push to main
+# week 4: push to aspokes (our main branch - no merge rights on main)
 ```
 
 ## Decisions
 
 Write down why you chose what you chose, in `docs/`. One short file per
 decision. You will be asked about these in week 7.
+
+## Tests
+Testing commit, push, pull request, review then merge
