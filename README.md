@@ -1,3 +1,5 @@
+[![plan](https://github.com/internship-cws-cloud/group2a-watch/actions/workflows/plan.yml/badge.svg?branch=aspokes)](https://github.com/internship-cws-cloud/group2a-watch/actions/workflows/plan.yml) [![deploy](https://github.com/internship-cws-cloud/group2a-watch/actions/workflows/deploy.yml/badge.svg?branch=aspokes)](https://github.com/internship-cws-cloud/group2a-watch/actions/workflows/deploy.yml)
+
 # group2a - Watch it
 
 Cloud Engineering Internship, Cohort 3.
