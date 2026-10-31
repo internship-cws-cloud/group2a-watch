@@ -34,3 +34,6 @@ should be able to follow this section and get the app running._
 
 Write down why you chose what you chose, in `docs/`. One short file per
 decision. You will be asked about these in week 7.
+
+## Tests
+Testing commit, push, pull request, review then merge
